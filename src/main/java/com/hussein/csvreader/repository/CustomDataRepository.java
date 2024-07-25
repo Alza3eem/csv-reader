@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CustomDataRepository extends JpaRepository<CustomDataEntity, Long> {
 
+    CustomDataEntity findByCode(String code);
 }
