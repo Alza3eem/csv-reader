@@ -28,7 +28,6 @@ public class CsvReader {
         List<CustomData> customData = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
             String line;
-            // Skip the header line if necessary
             boolean isFirstLine = true;
             while ((line = reader.readLine()) != null) {
                 if (isFirstLine) {
