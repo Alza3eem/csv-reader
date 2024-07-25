@@ -1,6 +1,8 @@
 package com.hussein.csvreader.controller;
 
+import com.hussein.csvreader.repository.CustomDataRepository;
 import com.hussein.csvreader.service.CsvUploaderService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,6 +32,8 @@ class DataReaderControllerTest {
     private MockMvc mockMvc;
     @Autowired
     private CsvUploaderService csvUploaderService;
+    @Autowired
+    private CustomDataRepository customDataRepository;
 
     @BeforeEach
     public void setup() throws Exception {
@@ -42,6 +46,11 @@ class DataReaderControllerTest {
                 csvBytes
         );
         csvUploaderService.processAndStoreCsvData(csvFile);
+    }
+
+    @AfterEach
+    public void cleanDB() throws Exception {
+        customDataRepository.deleteAll();
     }
 
     @Test

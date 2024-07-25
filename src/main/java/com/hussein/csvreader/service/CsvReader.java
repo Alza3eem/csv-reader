@@ -22,19 +22,6 @@ import java.util.Map;
 public class CsvReader {
 
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-    private static final Map<String, Integer> EXPECTED_HEADERS;
-
-    static {
-        EXPECTED_HEADERS = new HashMap<>();
-        EXPECTED_HEADERS.put("source", 0);
-        EXPECTED_HEADERS.put("codeListCode", 0);
-        EXPECTED_HEADERS.put("code", 0);
-        EXPECTED_HEADERS.put("displayValue", 0);
-        EXPECTED_HEADERS.put("longDescription", 0);
-        EXPECTED_HEADERS.put("fromDate", 0);
-        EXPECTED_HEADERS.put("toDate", 0);
-        EXPECTED_HEADERS.put("sortingPriority", 0);
-    }
 
     public List<CustomData> processCsvFile(MultipartFile file) {
         Map<String, Integer> csvHeaders = new HashMap<>();
@@ -75,6 +62,16 @@ public class CsvReader {
     }
 
     private boolean areHeadersValid(String[] headers) {
+        Map<String, Integer> EXPECTED_HEADERS = new HashMap<>();
+        EXPECTED_HEADERS.put("source", 0);
+        EXPECTED_HEADERS.put("codeListCode", 0);
+        EXPECTED_HEADERS.put("code", 0);
+        EXPECTED_HEADERS.put("displayValue", 0);
+        EXPECTED_HEADERS.put("longDescription", 0);
+        EXPECTED_HEADERS.put("fromDate", 0);
+        EXPECTED_HEADERS.put("toDate", 0);
+        EXPECTED_HEADERS.put("sortingPriority", 0);
+
         if (headers.length != EXPECTED_HEADERS.keySet().size()) {
             return false;
         }
