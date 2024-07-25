@@ -40,4 +40,8 @@ public class CsvReaderService {
                 entity.getToDate(),
                 entity.getSortingPriority());
     }
+
+    public void deleteAllData() {
+        customDataRepository.deleteAll();
+    }
 }

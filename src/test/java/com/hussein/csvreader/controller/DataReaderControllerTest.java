@@ -3,7 +3,6 @@ package com.hussein.csvreader.controller;
 import com.hussein.csvreader.repository.CustomDataRepository;
 import com.hussein.csvreader.service.CsvUploaderService;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +18,7 @@ import java.nio.file.Paths;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -70,5 +70,20 @@ class DataReaderControllerTest {
                 .andExpect(jsonPath("$.codeListCode", is("ZIB001")))
                 .andExpect(jsonPath("$.code", is("271636001")))
                 .andExpect(jsonPath("$.displayValue", is("Polsslag regelmatig")));
+    }
+
+    @Test
+    void testUploadAndDeleteAllData() throws Exception {
+        mockMvc.perform(get("/all")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(18)));
+        mockMvc.perform(delete("/delete")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+        mockMvc.perform(get("/all")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(0)));
     }
 }
