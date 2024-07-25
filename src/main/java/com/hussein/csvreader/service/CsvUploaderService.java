@@ -4,11 +4,11 @@ import com.hussein.csvreader.domain.CustomData;
 import com.hussein.csvreader.domain.CustomDataEntity;
 import com.hussein.csvreader.repository.CustomDataRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +28,11 @@ public class CsvUploaderService {
                         customData.fromDate(),
                         customData.toDate(),
                         customData.sortingPriority()
-                )).collect(Collectors.toList());
-        customDataRepository.saveAll(customDataEntities);
+                )).toList();
+        try {
+            customDataRepository.saveAll(customDataEntities);
+        } catch (DataIntegrityViolationException e) {
+            throw new IllegalArgumentException("Duplicate code value found", e);
+        }
     }
 }

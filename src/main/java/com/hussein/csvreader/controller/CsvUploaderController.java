@@ -1,6 +1,5 @@
 package com.hussein.csvreader.controller;
 
-import com.hussein.csvreader.service.CsvReaderService;
 import com.hussein.csvreader.service.CsvUploaderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class CsvUploaderController {
 
     private final CsvUploaderService csvUploaderService;
-    private final CsvReaderService csvReaderService;
 
     @PostMapping("/upload")
     public ResponseEntity<HttpStatus> uploadCsv(
